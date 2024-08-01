@@ -1,6 +1,11 @@
-const { Sequelize } = require("sequelize");
-const dbConfig = require("../config/database");
+import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize(dbConfig);
+const dbUrl = process.env.DATABASE_URL || "";
 
-module.exports = sequelize;
+const sequelize = new Sequelize(dbUrl, {
+  define: {
+    underscored: true,
+  },
+});
+
+export { sequelize };
