@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  web:
+    build: .
+
+    # image: node:20
+    depends_on:
+      - db
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      DATABASE_URL: "postgres://postgres:postgres@db:5432/api_express_auth"
+      NODE_ENV: "development"
+
+    volumes:
+      - .:/usr/app
+
+    networks:
+      - api-express
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "49555:5432"
+
+    networks:
+      - api-express
+
+networks:
+  api-express:
+    driver: bridge
