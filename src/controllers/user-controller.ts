@@ -1,5 +1,7 @@
 import { User } from "../models/user-model";
 import { Request, Response } from "express";
+import { validatePassword } from "../helpers/validade-password";
+import { validateEmail } from "../helpers/validade-email";
 
 const usersController = {
   index: async (req: Request, res: Response) => {
@@ -33,6 +35,29 @@ const usersController = {
 
   save: async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
+
+    if (!name) {
+      return res.status(400).json({ message: "Name is required" });
+    }
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    if (!validateEmail(email)) {
+      return res.status(400).json({ message: "Invalid email" });
+    }
+
+    const emailExists = await User.findOne({ where: { email } });
+    if (emailExists) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    if (!validatePassword(password)) {
+      const messageError = validatePassword(password);
+
+      return res.status(400).json({ message: messageError });
+    }
 
     try {
       const user = await User.create({ name, email, password });
