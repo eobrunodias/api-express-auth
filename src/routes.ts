@@ -1,5 +1,7 @@
 import { Router } from "express";
-import { usersController } from "./controllers/user-controller";
+import { usersController } from "./controllers/users/user-controller";
+import { AuthUserController } from "./controllers/users/auth/auth-user-controller";
+import { AuthMiddlewares } from "./middlewares/auth";
 
 const router = Router();
 
@@ -9,11 +11,14 @@ router.get("/", (request, response) => {
 });
 
 // Users
-router.get("/users", usersController.index);
+router.get("/users", AuthMiddlewares, usersController.index);
 router.get("/users/:id", usersController.show);
-router.post("/users/register", usersController.save);
+router.post("/users/register", usersController.store);
 router.put("/users/:id", usersController.update);
+router.patch("/users/:id", usersController.patch);
 router.delete("/users/:id", usersController.delete);
+
+router.post("/auth", AuthUserController.authenticate);
 
 // ...
 
