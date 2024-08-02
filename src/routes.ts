@@ -11,7 +11,7 @@ router.get("/", (request, response) => {
 // Users
 router.get("/users", usersController.index);
 router.get("/users/:id", usersController.show);
-router.post("/users", usersController.save);
+router.post("/users/register", usersController.save);
 router.put("/users/:id", usersController.update);
 router.delete("/users/:id", usersController.delete);
 
