@@ -12,7 +12,7 @@ router.get("/", (request, response) => {
 
 // Users
 router.get("/users", AuthMiddlewares, usersController.index);
-router.get("/users/:id", usersController.show);
+router.get("/users/:id", AuthMiddlewares, usersController.show);
 router.post("/users/register", usersController.store);
 router.put("/users/:id", usersController.update);
 router.patch("/users/:id", usersController.patch);
