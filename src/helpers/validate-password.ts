@@ -27,5 +27,5 @@ export function validatePassword(password: string): string | boolean {
     return "Password must have at least 1 special character";
   }
 
-  return true;
+  return false;
 }
