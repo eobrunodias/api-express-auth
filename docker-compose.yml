@@ -8,15 +8,20 @@ services:
     depends_on:
       - db
 
+    restart: always
+
     ports:
       - "3000:3000"
 
     environment:
-      DATABASE_URL: "postgres://postgres:postgres@db:5432/api_express_auth"
+      DATABASE_URL: ${DATABASE_URL}
       NODE_ENV: "development"
 
+    command: bash -c "npm install --only=prod && npm run dev"
+
     volumes:
-      - .:/usr/app
+      - ./dist:/usr/src/api-express-auth/dist
+      - ./package.json:/usr/src/api-express-auth/package.json
 
     networks:
       - api-express
@@ -24,9 +29,12 @@ services:
   db:
     image: postgres
     environment:
-      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "49555:5432"
+
+    volumes:
+      - ./docker/pgdata:/var/lib/postgresql/data
 
     networks:
       - api-express
