@@ -7,7 +7,7 @@ type TokenPayload = {
   exp: number;
 };
 
-export function AuthMiddlewares(
+export function authMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
