@@ -3,29 +3,30 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    queryInterface.createTable("users", {
+    queryInterface.createTable("tasks", {
       id: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
+        allowNull: false,
         autoIncrement: true,
-        allowNull: false,
+        primaryKey: true,
       },
-      name: {
+      title: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
+      description: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      rule: {
-        type: Sequelize.ENUM("admin", "user"),
+      done: {
+        type: Sequelize.BOOLEAN,
         allowNull: false,
+      },
+      init_date: {
+        type: Sequelize.DATE,
+      },
+      end_date: {
+        type: Sequelize.DATE,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -42,6 +43,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    queryInterface.dropTable("users");
+    queryInterface.dropTable("tasks");
   },
 };
