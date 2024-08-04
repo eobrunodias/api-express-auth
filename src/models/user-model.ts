@@ -1,11 +1,12 @@
 import { sequelize } from "../database";
 import { DataTypes, Model } from "sequelize";
 
-interface UserInstance extends Model {
+export interface UserInstance extends Model {
   id: number;
   name: string;
   email: string;
   password: string;
+  rule: string;
 }
 
 const User = sequelize.define<UserInstance>(
@@ -31,7 +32,7 @@ const User = sequelize.define<UserInstance>(
       allowNull: false,
     },
     rule: {
-      type: DataTypes.ENUM("admin", "user"),
+      type: DataTypes.ENUM("ADMIN", "USER"),
       allowNull: false,
     },
   },
