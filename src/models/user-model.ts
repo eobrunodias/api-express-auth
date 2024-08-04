@@ -30,6 +30,10 @@ const User = sequelize.define<UserInstance>(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    rule: {
+      type: DataTypes.ENUM("admin", "user"),
+      allowNull: false,
+    },
   },
   {
     underscored: true,
