@@ -1,5 +1,7 @@
 "use strict";
 
+import { password } from "../../helpers/password-generate";
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -7,26 +9,26 @@ module.exports = {
       {
         name: "John Doe",
         email: "johndoe@email.com",
-        password: "123456",
-        rule: "admin",
+        password: password,
+        rule: "ADMIN",
       },
       {
         name: "Jane Doe",
         email: "janedoe@email.com",
-        password: "1234",
-        rule: "user",
+        password: password,
+        rule: "ADMIN",
       },
       {
         name: "Mario Doe",
         email: "mariodoe@email.com",
-        password: "12345",
-        rule: "user",
+        password: password,
+        rule: "USER",
       },
       {
         name: "Luis Doe",
         email: "luisdoe@email.com",
-        password: "1234567",
-        rule: "user",
+        password: password,
+        rule: "USER",
       },
     ]);
   },
