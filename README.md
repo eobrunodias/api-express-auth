@@ -1,6 +1,6 @@
 # API Express Auth
 
-🇧🇷 [Portuguese](README_pt.md)
+🇧🇷 [Portuguese](README_pt-br.md)
 
 ⚙ API with user authentication, and administration rules, developed with Express/TS and ORM. At the moment, the main content route is Tasks.
 
