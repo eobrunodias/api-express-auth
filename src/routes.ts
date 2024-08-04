@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { userController } from "./controllers/users/user-controller";
-import { AuthUserController } from "./auth/auth-user-controller";
-import { authMiddleware } from "./middlewares/auth";
 import { taskController } from "./controllers/tasks/task-controller";
+import { AuthUserController } from "./auth/auth-user-controller";
+import { me } from "./middlewares/me";
+import { auth } from "./middlewares/auth";
 
 const router = Router();
 
@@ -12,24 +13,23 @@ router.get("/", (request, response) => {
 });
 
 // Users
-router.get("/users", authMiddleware, userController.index);
-router.get("/users/:id", authMiddleware, userController.show);
+router.get("/users", auth, me, userController.index);
+router.get("/users/:id", auth, me, userController.show);
+router.post("/users/register", auth, me, userController.store);
+router.patch("/users/:id", auth, me, userController.patch);
+router.delete("/users/:id", auth, me, userController.delete);
+router.put("/users/:id", auth, me, userController.update);
 
-router.post("/users/register", userController.store);
-router.put("/users/:id", authMiddleware, userController.update);
-router.patch("/users/:id", authMiddleware, userController.patch);
-router.delete("/users/:id", authMiddleware, userController.delete);
-
+// Auth
 router.post("/auth/login", AuthUserController.authenticate);
-router.post("/auth/register", AuthUserController.authenticate);
 
 // Tasks
-router.get("/tasks", authMiddleware, taskController.index);
-router.get("/tasks/:id", authMiddleware, taskController.show);
-router.post("/tasks", authMiddleware, taskController.store);
-router.put("/tasks/:id", authMiddleware, taskController.update);
-router.patch("/tasks/:id", authMiddleware, taskController.patch);
-router.delete("/tasks/:id", authMiddleware, taskController.delete);
+router.get("/tasks", me, taskController.index);
+router.get("/tasks/:id", me, taskController.show);
+router.post("/tasks", me, taskController.store);
+router.put("/tasks/:id", me, taskController.update);
+router.patch("/tasks/:id", me, taskController.patch);
+router.delete("/tasks/:id", me, taskController.delete);
 
 // ...
 
