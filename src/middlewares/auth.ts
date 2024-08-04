@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
 
 type TokenPayload = {
   id: string;
@@ -7,26 +6,15 @@ type TokenPayload = {
   exp: number;
 };
 
-export function authMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const { authorization } = req.headers;
+export function auth(req: Request, res: Response, next: NextFunction) {
+  const { id, rule } = req.headers;
 
-  if (!authorization) {
+  if (!id || !rule) {
     return res.status(401).json({ message: "Token is required" });
   }
 
-  const [, token] = authorization.split(" ");
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret");
-    const { id } = decoded as TokenPayload;
-
-    req.userId = id;
-  } catch (error) {
-    return res.status(401).json({ message: "Invalid token" });
+  if (rule !== "admin") {
+    return res.status(401).json({ message: "Unauthorized" });
   }
 
   next();
