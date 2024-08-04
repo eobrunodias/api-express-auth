@@ -5,9 +5,10 @@ export class UserMapper {
   static toResponse(user: UserInstance): CreateUserDTO {
     return {
       id: user.id,
-      name: user.title,
-      email: user.description,
+      name: user.name,
+      email: user.email,
       password: user.password,
+      rule: user.rule,
     };
   }
 
