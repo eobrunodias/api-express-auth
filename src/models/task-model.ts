@@ -1,13 +1,13 @@
 import { sequelize } from "../database";
 import { DataTypes, Model } from "sequelize";
 
-interface TaskInstance extends Model {
+export interface TaskInstance extends Model {
   id: number;
   title: string;
   description: string;
   done: boolean;
-  init_date: Date;
-  end_date: Date;
+  initDate: Date;
+  endDate: Date;
 }
 
 export const Task = sequelize.define<TaskInstance>(
